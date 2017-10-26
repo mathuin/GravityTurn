@@ -87,6 +87,15 @@ namespace GravityTurn
             ExecuteNode();
         }
 
+        public double TimeToPlane(Orbit to)
+        {
+            System.Type LaunchTimingType = FindMechJebModule("MuMech.LaunchTiming");
+            MethodInfo TimeToPlaneMethod = LaunchTimingType.GetMethod("TimeToPlane", BindingFlags.Public | BindingFlags.Static);
+
+            // LANDifference hardcoded to zero for now.
+            double timetoplane = (double)TimeToPlaneMethod.Invoke(null, new object[] {(double) 0.0, vessel.mainBody, vessel.latitude, vessel.longitude, to});
+            return timetoplane;
+        }
 
     }
 }

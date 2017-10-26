@@ -727,6 +727,15 @@ namespace GravityTurn
             info += string.Format("Drag coefficient fwd:\t{0:0.00}\n", vessel.DragCubeCoefForward());
             DragRatio.value = vesselState.areaDrag / vesselState.mass;
             info += string.Format("area/mass:\t{0:0.00}\n", DragRatio.value);
+            // must check for MJ *and* target
+            if (mucore.Initialized) {
+                ITargetable target = FlightGlobals.fetch.VesselTarget;
+                if (target != null) {
+                    Orbit to = target.GetOrbit();
+                    info += string.Format("\nTime to plane:\t{0:0.00}\n", mucore.TimeToPlane(to));
+                    info += string.Format("Target Inclination:\t{0:0.00}\n", to.inclination);
+                }
+            }
             return info;
         }
 
